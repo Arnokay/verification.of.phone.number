@@ -15,6 +15,11 @@ class SubscribeService {
     }
 
     const code = verificationCodeService.generateCode();
+
+    if(!code) {
+      return { code: 503, response: "Verification service overloaded, please try later" };
+    }
+
     databaseRepository.addPhoneNumberWithVerificationCode(phoneNumber, code);
 
     return code;
